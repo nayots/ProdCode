@@ -36,8 +36,10 @@ namespace ProdCodeApi.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public string Get(int id)
         {
+            var currentUser = HttpContext.User;
             return "value";
         }
 

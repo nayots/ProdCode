@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using ProdCodeApi.Data;
 
 namespace ProdCodeApi
 {
@@ -49,6 +51,8 @@ namespace ProdCodeApi
                     .AllowCredentials()
                     .Build());
             });
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ProdCodeDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddMvc();
         }
