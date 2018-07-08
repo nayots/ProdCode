@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ProdCodeApi.Data;
+using AutoMapper;
 
 namespace ProdCodeApi
 {
@@ -55,6 +56,7 @@ namespace ProdCodeApi
             services.AddDbContext<ProdCodeDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddMvc();
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

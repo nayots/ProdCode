@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProdCodeApi.Data;
 
 namespace ProdCodeApi.Migrations
 {
     [DbContext(typeof(ProdCodeDbContext))]
-    partial class ProdCodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180708095614_UserRolesSeed")]
+    partial class UserRolesSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

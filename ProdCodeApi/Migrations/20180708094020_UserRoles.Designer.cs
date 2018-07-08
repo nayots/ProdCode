@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProdCodeApi.Data;
 
 namespace ProdCodeApi.Migrations
 {
     [DbContext(typeof(ProdCodeDbContext))]
-    partial class ProdCodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180708094020_UserRoles")]
+    partial class UserRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,8 +38,7 @@ namespace ProdCodeApi.Migrations
                     b.ToTable("Roles");
 
                     b.HasData(
-                        new { Id = 1, Name = "User" },
-                        new { Id = 2, Name = "Admin" }
+                        new { Id = 1, Name = "User" }
                     );
                 });
 
@@ -84,8 +85,7 @@ namespace ProdCodeApi.Migrations
                     b.ToTable("UserRole");
 
                     b.HasData(
-                        new { UserId = 1, RoleId = 1 },
-                        new { UserId = 1, RoleId = 2 }
+                        new { UserId = 1, RoleId = 1 }
                     );
                 });
 
