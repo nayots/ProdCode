@@ -36,7 +36,7 @@ class AuthProvider extends React.Component {
         this.setState({
             isAuth: true,
             token: tok,
-            user: urs
+            user: JSON.parse(urs)
         });
     }
   }

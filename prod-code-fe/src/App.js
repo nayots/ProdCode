@@ -7,8 +7,8 @@ class App extends Component {
   render() {
     return (
       <AuthConsumer>
-        {({ isAuth, login, logout }) => (
-          <Header isAuth={isAuth} login={login} logout={logout} />
+        {({ isAuth, login, logout, user }) => (
+          <Header isAuth={isAuth} login={login} logout={logout} user={user} />
         )}
       </AuthConsumer>
     );

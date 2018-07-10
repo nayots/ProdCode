@@ -82,7 +82,7 @@ namespace ProdCodeApi.Controllers
 
             UserProfile userProfile = this.mapper.Map<User, UserProfile>(userToRegister);
 
-            return Ok(userProfile);
+            return Ok(new { token = BuildToken(userProfile), user = userProfile });
         }
 
         private string BuildToken(UserProfile user)
@@ -101,7 +101,7 @@ namespace ProdCodeApi.Controllers
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddDays(30),
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
