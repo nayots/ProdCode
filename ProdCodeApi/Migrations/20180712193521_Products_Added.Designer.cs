@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProdCodeApi.Data;
 
 namespace ProdCodeApi.Migrations
 {
     [DbContext(typeof(ProdCodeDbContext))]
-    partial class ProdCodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180712193521_Products_Added")]
+    partial class Products_Added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,15 +27,16 @@ namespace ProdCodeApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AuthorId");
-
                     b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                        .IsRequired();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 7, 12, 19, 35, 20, 146, DateTimeKind.Utc));
 
-                    b.Property<Guid>("DisqusId");
+                    b.Property<Guid>("DisqusId")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new Guid("e27cc9d8-6a4e-4faa-9289-7456492a0a8d"));
 
                     b.Property<string>("ImageUrl")
                         .IsRequired();
@@ -42,13 +45,15 @@ namespace ProdCodeApi.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
+                    b.Property<int>("UserId");
+
                     b.Property<bool>("isArchived");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("ProdCodeApi.Data.Models.Role", b =>
@@ -125,7 +130,7 @@ namespace ProdCodeApi.Migrations
                 {
                     b.HasOne("ProdCodeApi.Data.Models.User", "Author")
                         .WithMany("Products")
-                        .HasForeignKey("AuthorId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -37,6 +37,11 @@ export default class Header extends React.Component {
 
               {this.props.isAuth ? (
                 <React.Fragment>
+                <NavItem>
+                  <NavLink tag={Link} to="/product/create">
+                    Create
+                  </NavLink>
+                </NavItem>
                 <NavItem className="nav-link" style={{cursor: "pointer"}}>
                   {this.props.user.name || "Mystery man"}
                 </NavItem>

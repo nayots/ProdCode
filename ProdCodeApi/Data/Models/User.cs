@@ -15,5 +15,7 @@ namespace ProdCodeApi.Data.Models
         public DateTime? Birthdate { get; set; }
 
         public ICollection<UserRole> Roles { get; set; }
+
+        public ICollection<Product> Products { get; set; }
     }
 }

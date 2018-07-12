@@ -101,7 +101,7 @@ namespace ProdCodeApi.Controllers
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
               _config["Jwt:Issuer"],
               claims,
-              expires: DateTime.Now.AddDays(30),
+              expires: DateTime.UtcNow.AddDays(30),
               signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

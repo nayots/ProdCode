@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProdCodeApi.Data.Models;
 using ProdCodeApi.Helpers;
+using System;
 
 namespace ProdCodeApi.Data
 {
@@ -12,6 +13,8 @@ namespace ProdCodeApi.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +31,10 @@ namespace ProdCodeApi.Data
                 .HasMany(u => u.Roles)
                 .WithOne(ur => ur.User)
                 .HasForeignKey(ur => ur.UserId);
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Products)
+                .WithOne(u => u.Author)
+                .HasForeignKey(p => p.AuthorId);
 
             modelBuilder.Entity<Role>().Property(r => r.Name).IsRequired();
             modelBuilder.Entity<Role>().HasIndex(r => r.Name).IsUnique();
@@ -35,6 +42,13 @@ namespace ProdCodeApi.Data
                 .HasMany(r => r.Users)
                 .WithOne(ur => ur.Role)
                 .HasForeignKey(ur => ur.RoleId);
+
+            modelBuilder.Entity<Product>().Property(p => p.Name).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.Name).HasMaxLength(100);
+            modelBuilder.Entity<Product>().Property(p => p.Code).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.Code).HasMaxLength(20);
+            modelBuilder.Entity<Product>().Property(p => p.ImageUrl).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.CreatedDate).IsRequired();
 
             modelBuilder.Entity<Role>().HasData(new Role() {Id = 1, Name = "User" });
             modelBuilder.Entity<Role>().HasData(new Role() {Id = 2, Name = "Admin" });

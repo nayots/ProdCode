@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProdCodeApi.Data;
 
 namespace ProdCodeApi.Migrations
 {
     [DbContext(typeof(ProdCodeDbContext))]
-    partial class ProdCodeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180712195233_Products_Added_Upd_2")]
+    partial class Products_Added_Upd_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,10 +30,11 @@ namespace ProdCodeApi.Migrations
                     b.Property<int>("AuthorId");
 
                     b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(20);
+                        .IsRequired();
 
-                    b.Property<DateTime>("CreatedDate");
+                    b.Property<DateTime>("CreatedDate")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(new DateTime(2018, 7, 12, 19, 52, 32, 511, DateTimeKind.Utc));
 
                     b.Property<Guid>("DisqusId");
 

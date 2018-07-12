@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using ProdCodeApi.Data;
 using AutoMapper;
+using ProdCodeApi.Services.Contracts;
+using ProdCodeApi.Services;
 
 namespace ProdCodeApi
 {
@@ -54,6 +56,7 @@ namespace ProdCodeApi
             });
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ProdCodeDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddTransient<IProductService, ProductService>();
 
             services.AddMvc();
             services.AddAutoMapper();
