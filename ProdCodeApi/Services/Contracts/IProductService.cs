@@ -10,5 +10,6 @@ namespace ProdCodeApi.Services.Contracts
     public interface IProductService
     {
         int CreateProduct(string userEmail, CreateProductModel productModel);
+        ProductDetailsModel GetDetailsById(int? productId);
     }
 }

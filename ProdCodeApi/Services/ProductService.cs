@@ -1,4 +1,5 @@
-﻿using CloudinaryDotNet;
+﻿using AutoMapper.QueryableExtensions;
+using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.Extensions.Configuration;
 using ProdCodeApi.Data;
@@ -59,6 +60,18 @@ namespace ProdCodeApi.Services
                 this.db.SaveChanges();
 
                 return newProduct.Id;
+            }
+        }
+
+        public ProductDetailsModel GetDetailsById(int? productId)
+        {
+            if (productId.HasValue && this.db.Products.Any(p => p.Id == productId && p.isArchived != true))
+            {
+                return this.db.Products.Where(p => p.Id == productId).ProjectTo< ProductDetailsModel>().FirstOrDefault();
+            }
+            else
+            {
+                return null;
             }
         }
     }
