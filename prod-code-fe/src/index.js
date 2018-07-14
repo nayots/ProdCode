@@ -13,6 +13,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import RegisterForm from "./components/RegisterForm/RegisterForm";
 import CreateProduct from "./components/Product/CreateProduct";
 import ProductDetails from "./components/Product/ProductDetail";
+import EditProduct from "./components/Product/EditProduct";
 import { AuthConsumer } from "./components/Auth/AuthContext";
 import { Container } from "reactstrap";
 
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Route path="/auth/register" render={() => <RegisterForm isAuth={isAuth} login={login}/>} />
             <Route path="/product/create" render={() => <CreateProduct isAuth={isAuth} token={token}/>} />
             <Route path="/product/details/:productId" render={(props) => <ProductDetails isAuth={isAuth} user={user} token={token} {...props} />} />
+            <Route path="/product/edit/:productId" render={(props) => <EditProduct isAuth={isAuth} user={user} token={token} {...props} />} />
             <Route path="/" component={Landing} />
           </Switch>
         )}

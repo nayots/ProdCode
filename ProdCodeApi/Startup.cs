@@ -57,6 +57,7 @@ namespace ProdCodeApi
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ProdCodeDbContext>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddMvc();
             services.AddAutoMapper();
@@ -69,6 +70,8 @@ namespace ProdCodeApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
 
             app.UseAuthentication();
             app.UseMvc();

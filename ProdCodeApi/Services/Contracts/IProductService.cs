@@ -11,5 +11,7 @@ namespace ProdCodeApi.Services.Contracts
     {
         int CreateProduct(string userEmail, CreateProductModel productModel);
         ProductDetailsModel GetDetailsById(int? productId);
+        int EditProduct(EditProductModel editProductModel);
+        IEnumerable<ProductCard> GetAllMatches(string searchTerm);
     }
 }

@@ -98,5 +98,60 @@ namespace ProdCodeApi.Controllers
 
             return Ok();
         }
+
+        [HttpGet, Authorize, Route("edit/{productId}")]
+        public IActionResult Edit(int? productId)
+        {
+            if (!productId.HasValue || !this.db.Products.Any(p => p.Id == productId.Value))
+            {
+                return BadRequest("Invalid id");
+            }
+            Product productToEdit = this.db.Products.Single(p => p.Id == productId.Value);
+            this.db.Entry(productToEdit).Reference(p => p.Author).Load();
+            var currentUser = HttpContext.User;
+            string userEmail = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+            string[] userRoles = currentUser.Claims.Where(c => c.Type == ClaimTypes.Role).Select(v => v.Value).ToArray();
+
+            if (userEmail != productToEdit.Author.Email && !userRoles.Contains("Admin"))
+            {
+                return Unauthorized();
+            }
+
+            EditProductInfoModel editModel = this.mapper.Map<Product, EditProductInfoModel>(productToEdit);
+
+            return Ok(editModel);
+        }
+
+        [HttpPost, Authorize, Route("edit/{productId}")]
+        public IActionResult Edit([FromForm] EditProductModel editProductModel)
+        {
+            if (!this.ModelState.IsValid || !this.db.Products.Any(p => p.Id == editProductModel.Id.Value))
+            {
+                return BadRequest("Invalid id");
+            }
+            Product productToEdit = this.db.Products.Single(p => p.Id == editProductModel.Id.Value);
+            this.db.Entry(productToEdit).Reference(p => p.Author).Load();
+            var currentUser = HttpContext.User;
+            string userEmail = currentUser.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+            string[] userRoles = currentUser.Claims.Where(c => c.Type == ClaimTypes.Role).Select(v => v.Value).ToArray();
+
+            if (userEmail != productToEdit.Author.Email && !userRoles.Contains("Admin"))
+            {
+                return Unauthorized();
+            }
+
+            int editedProductId = this.productService.EditProduct(editProductModel);
+
+            return Ok(new { productId = editedProductId });
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("all/{searchTerm?}")]
+        public IActionResult Listing(string searchTerm = "")
+        {
+            IEnumerable<ProductCard> results = this.productService.GetAllMatches(searchTerm);
+
+            return Ok(results);
+        }
     }
 }
